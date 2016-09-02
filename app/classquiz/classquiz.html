@@ -1,0 +1,14 @@
+<div class="quizContainer">
+	<div class="questionContainer">
+		<span class="questionNumber">{{index+1}}</span>
+		<span class="question">{{questions[index].question}}</span>
+	</div>
+	<div class="answersContainer">
+		<div class="answer"
+			ng-repeat="answer in questions[index].answers"
+			ng-click="updateScores(answer.scores)">{{answer.text}}</div>
+	</div>
+</div>
+<div ng-repeat="i in [0,1,2,3,4,5,6,7,8,9,10,11]" ng-class="{highest: i === highestClass}">
+	{{classes[i]}}: {{classScores[i]}}, {{classScores[i]/maxScores[i]*100}}%
+</div>

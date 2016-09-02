@@ -1,0 +1,24 @@
+<div class="horizontalDisplay">
+	<div>
+		<h1>CHARACTERS</h1>
+		<div class="character" ng-repeat="character in characters">
+			<p>{{character.name}}, the {{character.gender}} {{character.race}} {{character.class}}</p>
+		</div>
+	</div>
+
+	<div>
+		<h1>NEW CHARACTER</h1>
+		<div class="newCharacterForm">
+			<p>Name: <input ng-model="data.name"></p>
+			<p>Gender: <select ng-model="data.gender" ng-options="gender for gender in ['male','female']"></select></p>
+			<p>Race: <select ng-model="data.race" ng-options="race for race in races"></select></p>
+			<p>Class: <select ng-model="data.class" ng-options="class for class in classes"></select></p>
+			<button ng-click="addCharacter()" class="selection">
+				Add Character
+			</button>
+			<p class="warning" ng-show="warning">
+				{{warning}}
+			</p>
+		</div>
+	</div>
+</div>

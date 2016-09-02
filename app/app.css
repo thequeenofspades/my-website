@@ -1,10 +1,39 @@
 /* app css stylesheet */
 
+html {
+  background-color: #F0F3F4;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  text-align: center;
+}
+
+button {
+  background-color: white;
+  border-radius: 3px;
+  border: 1px #9B59B6 solid;
+  transition-duration: 0.4s;
+  margin: 2px;
+}
+
+button:hover {
+  background-color: #D7BDE2;
+}
+
+input {
+  color: #9B59B6;
+}
+
+select {
+  color: #9B59B6;
+  text-transform: uppercase;
+  background-color: white;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
+  text-align: center;
 }
 
 .menu:before {
@@ -27,4 +56,14 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: #9B59B6;
+}
+
+a:hover, a:active {
+    text-decoration: none;
+    color: #D7BDE2;
 }

@@ -1,0 +1,32 @@
+.quizContainer {
+	padding: 10px;
+	border: 2px black solid;
+}
+
+.questionContainer {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+.questionNumber {
+	padding: 10px;
+	border: 1px black solid;
+}
+
+.question {
+	padding: 10px;
+}
+
+.answer {
+	border: 1px black solid;
+	padding: 10px;
+}
+
+.answer:hover {
+	cursor: pointer;
+	color: blue;
+}
+
+.highest {
+	color: red;
+}

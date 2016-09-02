@@ -1,0 +1,12 @@
+14
+
+Which combat role sounds most fun to you?
+4
+Charging straight at the enemies and engaging in melee combat
+1 5 6 7 8 9
+Hanging back and picking off enemies from a distance
+8 9 10 11 12
+Playing a support role, strengthening and healing teammates
+2 3 4 10 11 12
+Controlling the flow of battle and doing damage where it counts
+2 4 6 9 10 11 12

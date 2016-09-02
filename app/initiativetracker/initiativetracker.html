@@ -1,0 +1,36 @@
+<h1>INITIATIVE TRACKER</h1>
+
+<p>Turn: {{numTurns}}</p>
+
+<div><button ng-click="resetTurns()">Reset</button></div>
+<div><button ng-click="advanceTurn()">Advance Turn</button></div>
+<div><button ng-click="newBattle()">New Battle</button></div>
+
+<div class="initContainer">
+
+	<div ng-show="players.length > 0">
+		<h2>PLAYERS</h2>
+		<div ng-repeat="player in players" ng-class="{hasTurn: player === players[currentPlayerIndex]}">
+			{{player.name.toUpperCase()}}: {{player.init}} Init<span ng-show="player.health">, {{player.health}} Health
+			<input ng-model="player.damage" size=2/><button ng-click="damagePlayer(player)">Damage</button></span>
+			<button ng-click="killPlayer(player)">Kill</button>
+			<button ng-click="player.showNewCondition = !player.showNewCondition">Add Status Condition</button>
+			<span ng-show="player.showNewCondition">
+				Condition: <input ng-model="player.newCondition" size=5/> Turns: <input ng-model="player.newConditionTurns" size=2/>
+				<button ng-click="addStatusCondition(player)">Add</button>
+			</span>
+			<span ng-show="player.status.length > 0">
+				Status: <span ng-repeat="condition in player.status">{{condition.condition}} ({{condition.turns}}) </span>
+			</span>
+		</div>
+	</div>
+
+	<form class="addForm">
+		<h2>ADD A PLAYER</h2>
+		<div>Name: <input ng-model="name"/></div>
+		<div>Initiative: <input ng-model="init"/></div>
+		<div>Health: <input ng-model="health"/></div>
+		<button ng-click="addPlayer()">Add</button>
+	</form>
+
+</div>

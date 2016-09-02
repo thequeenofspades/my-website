@@ -1,0 +1,17 @@
+.horizontalDisplay {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	padding: 10px;
+}
+
+.newCharacterForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 10px;
+}
+
+.warning {
+	color: red;
+}
