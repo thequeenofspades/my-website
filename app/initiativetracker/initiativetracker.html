@@ -12,15 +12,19 @@
 		<h2>PLAYERS</h2>
 		<div ng-repeat="player in players" ng-class="{hasTurn: player === players[currentPlayerIndex]}">
 			{{player.name.toUpperCase()}}: {{player.init}} Init<span ng-show="player.health">, {{player.health}} Health
-			<input ng-model="player.damage" size=2/><button ng-click="damagePlayer(player)">Damage</button></span>
+				<form>
+					<input ng-model="player.damage" size=2/>
+					<button ng-click="damagePlayer(player)">Damage</button>
+				</form>
+			</span>
 			<button ng-click="killPlayer(player)">Kill</button>
 			<button ng-click="player.showNewCondition = !player.showNewCondition">Add Status Condition</button>
-			<span ng-show="player.showNewCondition">
+			<form ng-show="player.showNewCondition">
 				Condition: <input ng-model="player.newCondition" size=5/> Turns: <input ng-model="player.newConditionTurns" size=2/>
 				<button ng-click="addStatusCondition(player)">Add</button>
-			</span>
+			</form>
 			<span ng-show="player.status.length > 0">
-				Status: <span ng-repeat="condition in player.status">{{condition.condition}} ({{condition.turns}}) </span>
+				Status: <span ng-repeat="condition in player.status" class="condition" ng-click="removeCondition(player, condition)">{{condition.condition}} ({{condition.turns}}) </span> 
 			</span>
 		</div>
 	</div>

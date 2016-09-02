@@ -57,6 +57,10 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		player.showNewCondition = false;
 	};
 
+	$scope.removeCondition = function(player, condition) {
+		player.status.splice(player.status.indexOf(condition),1);
+	}
+
 	$scope.advanceTurn = function() {
 		var currentPlayerIndex = $scope.currentPlayerIndex;
 		$scope.currentPlayerIndex = ($scope.currentPlayerIndex+1) % $scope.players.length;
@@ -64,6 +68,13 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.numTurns = $scope.numTurns + 1;
 		}
 		var player = $scope.players[currentPlayerIndex];
+		for (var i = player.status.length - 1; i >= 0; i--) {
+			player.status[i]['turns']--;
+			if (player.status[i]['turns'] <= 0) {
+				player.status.splice(i,1);
+			}
+		}
+
 		// subtract 1 from each condition's turn count
 	};
 

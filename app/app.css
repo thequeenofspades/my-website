@@ -28,6 +28,10 @@ select {
   background-color: white;
 }
 
+form {
+  display: inline-block;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
