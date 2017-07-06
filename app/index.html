@@ -6,35 +6,49 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Hana Lee</title>
+  <title>Pathfinder Web Tools</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <!--link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css"-->
   <link rel="stylesheet" href="app.css">
   <link rel="stylesheet" href="components/header/header.css">
   <link rel="stylesheet" href="home/home.css">
   <link rel="stylesheet" href="classquiz/classquiz.css">
+  <link rel="stylesheet" href="themequiz/themequiz.css">
+  <link rel="stylesheet" href="spells/spells.css">
   <link rel="stylesheet" href="initiativetracker/initiativetracker.css">
-  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <link rel="stylesheet" href="diceroller/diceroller.css">
+  <link rel="stylesheet" href="cards/cards.css">
+  <!--script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script-->
     <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script src="bower_components/papaparse/papaparse.min.js"></script>
+  <script src="bower_components/interact/interact.js"></script>
   <script src="app.js"></script>
   <script src="home/home.js"></script>
   <script src="classquiz/classquiz.js"></script>
   <script src="initiativetracker/initiativetracker.js"></script>
   <script src="diceroller/diceroller.js"></script>
+  <script src="themequiz/themequiz.js"></script>
+  <script src="spells/spells.js"></script>
+  <script src="feats/feats.js"></script>
+  <script src="cards/cards.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
   <script src="components/header/headerController.js"></script>
 </head>
 <body>
   <ul class="menu">
     <li><a href="#!/home">home</a></li>
-    <li><a href="#!/initiativetracker">Initiative Tracker</a></li>
-    <li><a href="#!/diceroller">Dice Roller</a></li>
+    <li><a href="#!/spells">spells</a></li>
+    <li><a href="#!/feats">feats</a></li>
+    <li><a href="#!/initiativetracker">initiative tracker</a></li>
+    <li><a href="#!/diceroller">dice roller</a></li>
+    <li><a href="#!/cards">card generator</a></li>
   </ul>
 
   <!--[if lt IE 7]>
@@ -45,4 +59,5 @@
 
   <div ng-view></div>
 </body>
+<div style="font-style:italic;position:absolute;bottom:5px;text-align:center;width:99%">The Pathfinder Roleplaying Game is property of <a href="www.paizo.com">Paizo Inc.®</a></div>
 </html>

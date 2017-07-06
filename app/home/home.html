@@ -1,24 +1,24 @@
-<div class="horizontalDisplay">
-	<div>
-		<h1>CHARACTERS</h1>
-		<div class="character" ng-repeat="character in characters">
-			<p>{{character.name}}, the {{character.gender}} {{character.race}} {{character.class}}</p>
-		</div>
-	</div>
+<div class="contentBox">
+	<div style="width:50%">
+		<h1 style="text-align:center">PATHFINDER WEB TOOLS</h1>
 
-	<div>
-		<h1>NEW CHARACTER</h1>
-		<div class="newCharacterForm">
-			<p>Name: <input ng-model="data.name"></p>
-			<p>Gender: <select ng-model="data.gender" ng-options="gender for gender in ['male','female']"></select></p>
-			<p>Race: <select ng-model="data.race" ng-options="race for race in races"></select></p>
-			<p>Class: <select ng-model="data.class" ng-options="class for class in classes"></select></p>
-			<button ng-click="addCharacter()" class="selection">
-				Add Character
-			</button>
-			<p class="warning" ng-show="warning">
-				{{warning}}
-			</p>
-		</div>
+		<h2 style="text-align:center">Spells</h2>
+		<p>Filter all Pathfinder spells by name, class, level, and school.</p>
+
+		<h2 style="text-align:center">Feats</h2>
+		<p>Filter all Pathfinder feats by name, prerequisites, type, and source.</p>
+
+		<h2 style="text-align:center">Initiative Tracker</h2>
+		<p>Keep track of combat initiative for players and monsters, as well as health and status conditions. Change initiative order on the fly by reordering the list, and keep track of the creature currently taking its turn by using the Advance button.</p>
+
+		<h2 style="text-align:center">Dice Roller</h2>
+		<p>Add dice to the pool, enter a modifier, and click Roll Dice to auto-generate a random result.</p>
+
+		<h2 style="text-align:center">Card Generator</h2>
+		<p>Generate a formatted index card with all the stats for whatever you need: monsters, spells, items, and more.</p>
+	</div>
+	<div style="width:50%;text-align:center">
+		<a href="http://paizo.com/pathfinder/adventurePath/riseOfTheRunelords"><img src="images/rotr_cover.jpeg" alt="Rise of the Runelords AP Cover" style="height:400px"/></a>
+		<p style="text-align:left;font-style:italic">My group is getting ready to start the <a href="http://paizo.com/pathfinder/adventurePath/riseOfTheRunelords">Rise of the Runelords Adventure Path</a> this coming November. I'll be updating this page with our progress once we begin.</p>
 	</div>
 </div>

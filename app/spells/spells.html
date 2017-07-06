@@ -1,0 +1,53 @@
+<div class="spellsMainBody">
+    <div class="preparedSpellList">
+        <h1>Spellbook</h1>
+        <div ng-repeat="level in [0,1,2,3,4,5,6,7,8,9]">
+            <h2 ng-show="filterByLevel(level, spellbook).length > 0">Level {{level}}</h2>
+            <table class="preparedSpellTable">
+                <tr ng-repeat="spell in filterByLevel(level, spellbook)">
+                    <td>({{spell.source}})</td>
+                    <td><a ng-click="selectSpell(spell)">{{spell.name}}</a></td>
+                    <td><button ng-click="unlearnSpell(spell)">&gt;&gt;</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="allSpellList">
+        <h1>All Spells</h1>
+        <p ng-show="isLoading" class="loading">LOADING...</p>
+        <div>
+            Search: <input ng-model="searchTerm"/> <a ng-click="searchTerm=''">X</a> <button ng-click="advancedSearch=!advancedSearch">Advanced Search</button>
+        </div>
+        <div ng-show="advancedSearch">
+            Core Only: <input type="checkbox" ng-model="coreOnly" ng-click="filterSpells()"/>
+            <select selected="All Classes" ng-model="selectedClass" ng-options="class for class in classes"></select>
+            <select selected="All Schools" ng-model="selectedSchool" ng-options="school for school in arcaneSchools"></select>
+        </div>
+        <div>Showing {{filteredSpells.length}} out of {{spells.length}} spells</div>
+        <div ng-repeat="level in [0,1,2,3,4,5,6,7,8,9]">
+            <h2 ng-show="filterByLevel(level, filteredSpells).length > 0">Level {{level}}</h2>
+            <table class="spellTable">
+                <tr ng-repeat="spell in filterByLevel(level, filteredSpells)">
+                    <td><button ng-click="learnSpell(spell)">&lt;&lt;</button></td>
+                    <td><a ng-click="selectSpell(spell)">{{spell.name}}</a></td>
+                    <td>({{spell.source}})</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="spellDetail" ng-show="selectedSpell">
+        <h1>Spell Detail</h1>
+        <h2>{{selectedSpell.name}}</h2>
+        <h5>School: {{selectedSpell.school}}<span ng-show="selectedSpell.subschool"> ({{selectedSpell.subschool}})</span><span ng-show="selectedSpell.descriptor"> [{{selectedSpell.descriptor}}]</span></h5>
+        <h5>Level: {{selectedSpell.spell_level}}</h5>
+        <h5>Casting Time: {{selectedSpell.casting_time}}</h5>
+        <h5>Components: {{selectedSpell.components}}</h5>
+        <h5>Range: {{selectedSpell.range}}</h5>
+        <h5 ng-show="selectedSpell.area">Area: {{selectedSpell.area}}</h5>
+        <h5 ng-show="selectedSpell.effect">Effect: {{selectedSpell.effect}}</h5>
+        <h5 ng-show="selectedSpell.targets">Targets: {{selectedSpell.targets}}</h5>
+        <h5>Duration: {{selectedSpell.duration}}</h5>
+        <h5><span ng-show="selectedSpell.saving_throw">Saving Throw: {{selectedSpell.saving_throw}}, </span><span ng-show="selectedSpell.spell_resistence">Spell Resistance: {{selectedSpell.spell_resistence}}</span></h5>
+        <p style="text-align:justify;">{{selectedSpell.description}}</p>
+    </div>
+</div>

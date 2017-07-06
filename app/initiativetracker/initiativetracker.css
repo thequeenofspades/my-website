@@ -1,11 +1,10 @@
-.hasTurn {
-	font-weight: bold;
-}
-
 .initContainer {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
+	text-align: center;
+	height: 100%;
+	max-width: 80%;
 }
 
 .addForm {
@@ -21,4 +20,30 @@
 .condition:hover::after {
 	color: red;
 	content: "X ";
+}
+
+.initTable {
+	min-width: 100%;
+	background: rgba(255,255,255,0.5);
+	border: 1px solid rgba(0,0,0,0.4);
+	border-radius: 3px;
+	border-collapse: collapse;
+}
+
+.initTable td {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.inactive {
+	opacity: 0.5;
+}
+
+.active {
+	background-color: rgba(217, 136, 128,0.5);
+}
+
+.remove-icon:hover {
+	cursor: pointer;
+	color: #9B59B6;
 }

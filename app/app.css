@@ -1,29 +1,59 @@
 /* app css stylesheet */
 
 html {
-  background-color: #F0F3F4;
+  background-color: #000000;
+  background-image: url("images/bg_rotr.jpg");
+  background-position: right top;
+  background-attachment: fixed;
+  background-size: 100% auto;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+  color: #FFFFFF;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
   text-align: center;
+  vertical-align: center;
+  height: 100%;
+}
+
+body {
+  background-color: rgba(0,0,0,0.4);
+  padding-bottom: 2em;
+  position: relative;
 }
 
 button {
-  background-color: white;
+  background-color: #C0392B;
+  color: white;
   border-radius: 3px;
-  border: 1px #9B59B6 solid;
+  border: 2px black solid;
   transition-duration: 0.4s;
   margin: 2px;
+  text-shadow:
+   -1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+     1px 1px 0 #000;
 }
 
 button:hover {
-  background-color: #D7BDE2;
+  background-color: #D98880;
+  cursor: pointer;
 }
 
 input {
-  color: #9B59B6;
+  color: #C0392B;
+  text-align: center;
+}
+
+textarea {
+  color: #C0392B;
 }
 
 select {
-  color: #9B59B6;
+  color: #C0392B;
   text-transform: uppercase;
   background-color: white;
 }
@@ -32,9 +62,29 @@ form {
   display: inline-block;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+      background-color: #C0392B;
+} /* the new scrollbar will have a flat appearance with the set background color */
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2); 
+} /* this will style the thumb, ignoring the track */
+ 
+::-webkit-scrollbar-button {
+      background-color: #C0392B;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+ 
+::-webkit-scrollbar-corner {
+      background-color: #C0392B;
+} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
 .menu {
   list-style: none;
-  border-bottom: 0.1em solid black;
+  border-bottom: 0.1em solid #C0392B;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
   text-align: center;
@@ -50,6 +100,7 @@ form {
 
 .menu > li {
   display: inline;
+  font-size: 1.5em;
 }
 
 .menu > li:before {
@@ -64,10 +115,23 @@ form {
 
 a:link, a:visited {
   text-decoration: none;
-  color: #9B59B6;
+  color: #C0392B;
 }
 
 a:hover, a:active {
     text-decoration: none;
-    color: #D7BDE2;
+    color: #D98880;
+    cursor: pointer;
+}
+
+.flexCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.inline-square {
+  height: 1em;
+  width: 1em;
+  vertical-align: text-bottom;
 }

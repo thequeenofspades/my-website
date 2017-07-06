@@ -1,20 +1,57 @@
-<div>Roll Dice!</div>
+<h1>Dice Roller</h1>
 
-<div>
-	<button ng-click="addDie(1,4)">Add 1d4</button>
-	<button ng-click="addDie(1,6)">Add 1d6</button>
-	<button ng-click="addDie(1,8)">Add 1d8</button>
-	<button ng-click="addDie(1,10)">Add 1d10</button>
-	<button ng-click="addDie(1,12)">Add 1d12</button>
-	<button ng-click="addDie(1,20)">Add 1d20</button>
-	<button ng-click="addDie(1,100)">Add 1d100</button>
+<div style="display:flex;justify-content:center">
+	<div class="diceContainer" ng-click="addDie(4)">
+		<img ng-src="images/d4_icon.png" class="dice" />
+		<h2 class="diceLabel">d4</h2>
+	</div>
+	<div class="diceContainer" ng-click="addDie(6)">
+		<img ng-src="images/d6_icon.png" class="dice" />
+		<h2 class="diceLabel">d6</h2>
+	</div>
+	<div class="diceContainer" ng-click="addDie(8)">
+		<img ng-src="images/d8_icon.png" class="dice" />
+		<h2 class="diceLabel">d8</h2>
+	</div>
+	<div class="diceContainer" ng-click="addDie(10)">
+		<img ng-src="images/d10_icon.png" class="dice" />
+		<h2 class="diceLabel">d10</h2>
+	</div>
+	<div class="diceContainer" ng-click="addDie(12)">
+		<img ng-src="images/d12_icon.png" class="dice" />
+		<h2 class="diceLabel">d12</h2>
+	</div>
+	<div class="diceContainer" ng-click="addDie(20)">
+		<img ng-src="images/d20_icon.png" class="dice" />
+		<h2 class="diceLabel">d20</h2>
+	</div>
 </div>
 
-<div>
-	<button ng-click="rollDice()">Roll Dice</button>
-	<button ng-click="reset()">Reset</button>
+<div style="display:flex;justify-content:center;padding-right:100px;padding-left:100px">
+	<div style="flex:5 1 60%;max-width:100%;display:flex;flex-direction:column">
+		<h2>Dice Pool</h2>
+		<div class="dicePool">
+			<div ng-repeat="(key,value) in dice" style="display:flex;flex-wrap:wrap">
+				<div ng-repeat="i in range(value['num']) track by $index" class="diceContainer" style="display:flex" ng-click="removeDie(key, $index)">
+					<img ng-src="images/d{{key}}_icon.png" class="dice" />
+					<h2 class="diceLabel">{{value['values'][$index]}}</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+	<h1 style="align-self:flex-end;font-size:300%">+</h1>
+	<div style="flex:0 0 100px">
+		<h2>Modifier</h2>
+		<input ng-model="modifier" class="modifierInput" size=2/>
+	</div>
+	<div style="display:flex;flex-direction:column;align-self:flex-end;flex:1 0 10%">
+		<button ng-click="rollDice()"><h2>Roll Dice</h2></button>
+		<button ng-click="reset()"><h2>Reset</h2></button>
+	</div>
+	<div style="flex:1 0 10%">
+		<h2>Result</h2>
+		<div class="result">
+			{{result}}
+		</div>
+	</div>
 </div>
-
-<div>Result: {{result}}</div>
-
-<div>Dice: {{dice}}</div>

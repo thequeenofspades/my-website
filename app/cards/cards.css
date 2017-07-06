@@ -1,0 +1,92 @@
+.indexCard {
+	height: 466px; /*5in = 5x96px = 480px, - 4px top and bottom border - 10px top and bottom padding*/
+	width: 274px; /*3in = 3*96px = 288px, - 4px left and right border - 10px left and right padding*/
+	border: 2px solid #C0392B;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	padding: 5px;
+	background: #C0392B;
+	color: #FFFFFF;
+	text-shadow: none;
+	font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+.headerContainer {
+	font-variant: small-caps;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	overflow: hidden;
+	word-wrap: normal;
+	padding: 5px;
+}
+
+.headerLeft {
+	font-weight: bold;
+	font-size: 16pt;
+	text-align: left;
+	padding-right: 5px;
+}
+
+.headerRight {
+	font-size: 14pt;
+	text-align: right;
+	padding-left: 5px;
+}
+
+.contentContainer {
+	background: #FFFFFF;
+	padding: 2px;
+	color: #000000;
+	border: 2px solid #FFFFFF;
+	border-radius: 4px;
+	flex-grow: 2;
+	overflow: hidden;
+	word-wrap: break-word;
+	font-size: 10pt;
+}
+
+.contentContainer hr {
+	border-color: #C0392B;
+}
+
+.contentContainer p {
+	padding-left: 0.5em;
+	text-indent: -0.5em;
+}
+
+.subtitle {
+	font-style: italic;
+	font-size: 11pt;
+	color: #C0392B;
+}
+
+.smallHeader {
+	color: #C0392B;
+	font-variant: small-caps;
+	border-top: 1px solid #C0392B;
+	border-bottom: 1px solid #C0392B;
+	width: 100%;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
+.statblock {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+	font-size: 8pt;
+}
+
+.contentInput {
+	width: 300px;
+}
+
+.cardInputTable th, td{
+	padding: 10px;
+	text-align: left;
+}

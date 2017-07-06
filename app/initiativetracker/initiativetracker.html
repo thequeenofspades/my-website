@@ -1,40 +1,96 @@
 <h1>INITIATIVE TRACKER</h1>
 
-<p>Turn: {{numTurns}}</p>
+<div class="initContainer contentBox">
 
-<div><button ng-click="resetTurns()">Reset</button></div>
-<div><button ng-click="advanceTurn()">Advance Turn</button></div>
-<div><button ng-click="newBattle()">New Battle</button></div>
-
-<div class="initContainer">
-
-	<div ng-show="players.length > 0">
-		<h2>PLAYERS</h2>
-		<div ng-repeat="player in players" ng-class="{hasTurn: player === players[currentPlayerIndex]}">
-			{{player.name.toUpperCase()}}: {{player.init}} Init<span ng-show="player.health">, {{player.health}} Health
-				<form>
-					<input ng-model="player.damage" size=2/>
-					<button ng-click="damagePlayer(player)">Damage</button>
-				</form>
-			</span>
-			<button ng-click="killPlayer(player)">Kill</button>
-			<button ng-click="player.showNewCondition = !player.showNewCondition">Add Status Condition</button>
-			<form ng-show="player.showNewCondition">
-				Condition: <input ng-model="player.newCondition" size=5/> Turns: <input ng-model="player.newConditionTurns" size=2/>
-				<button ng-click="addStatusCondition(player)">Add</button>
+	<div class="flexCol">
+		<div>
+			<h2>Players</h2>
+			<form>
+				NAME <input ng-model="inputs.newPlayerName" />
+				<button ng-click="addPlayer()">ADD</button>
 			</form>
-			<span ng-show="player.status.length > 0">
-				Status: <span ng-repeat="condition in player.status" class="condition" ng-click="removeCondition(player, condition)">{{condition.condition}} ({{condition.turns}}) </span> 
-			</span>
+			<div><button ng-click="players=[]" ng-show="players.length > 0">CLEAR</button></div>
+			<table class="initTable" ng-show="players.length > 0">
+				<tr ng-repeat="player in players">
+					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removePlayer(player)" title="Remove"/></td>
+					<td>
+						<img ng-src="images/heart_icon_red.png" class="inline-square" title="Player"/>
+						{{player.name}}
+					</td>
+					<td><form>
+						<input ng-model="inputs.initiatives[player.name]" size=1 />
+						<button ng-click="addPlayerToInitiative(player, inputs.initiatives[player.name])">+</button>
+					</form></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<h2>Monsters</h2>
+			<form>
+				NAME <input ng-model="inputs.newMonster" />
+				<br>
+				HEALTH <input ng-model="inputs.newMonsterHealth" size=1 />
+				INIT MOD <input ng-model="inputs.newMonsterInitMod" size=1 />
+				<br>
+				QUANTITY <input ng-model="inputs.numNewMonsters" size=1 />
+				<button ng-click="addMonster()">ADD</button>
+			</form>
+			<div><button ng-click="monsters=[]" ng-show="monsters.length > 0">CLEAR</button></div>
+			<table class="initTable" ng-show="monsters.length > 0">
+				<tr ng-repeat="monster in monsters">
+					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeMonster(monster)" title="Remove"/></td>
+					<td>
+						<img ng-src="images/heart_icon_black.png" class="inline-square" title="Monster"/>
+						{{monster.name}}
+					</td>
+					<td>
+						<img ng-src="images/potion_icon_black.png" class="inline-square" title="Health"/>
+						{{monster.health}}
+					</td>
+					<td><form>
+						<input ng-model="inputs.initiatives[monster.name]" size=1 />
+						<span ng-show="monster.mod >= 0">+</span>{{monster.mod}}
+						<button ng-click="addMonsterToInitiative(monster, inputs.initiatives[monster.name])">+</button>
+					</form></td>
+				</tr>
+			</table>
 		</div>
 	</div>
-
-	<form class="addForm">
-		<h2>ADD A PLAYER</h2>
-		<div>Name: <input ng-model="name"/></div>
-		<div>Initiative: <input ng-model="init"/></div>
-		<div>Health: <input ng-model="health"/></div>
-		<button ng-click="addPlayer()">Add</button>
-	</form>
+	<div>
+		<h2>Initiative Order</h2>
+		<button ng-click="initiativeOrder=[]" ng-show="initiativeOrder.length > 0">CLEAR</button>
+		<button ng-click="active = (active + 1) % initiativeOrder.length">ADVANCE</button>
+		<table class="initTable" ng-show="initiativeOrder.length > 0">
+			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}">
+				<td>
+					<a><img ng-src="images/arrow_up_icon_black.png" ng-click="reorderInitiative(creature, 1)" class="inline-square" title="Move Up"/></a>
+					<a><img ng-src="images/arrow_down_icon_black.png" ng-click="reorderInitiative(creature, -1)" class="inline-square" title="Move Down"/></a>
+				</td>
+				<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeFromInititiative(creature)" title="Remove"/></td>
+				<td>
+					<img ng-src="images/heart_icon_red.png" class="inline-square" ng-show="creature.type=='player'" title="Player"/>
+					<img ng-src="images/heart_icon_black.png" class="inline-square" ng-show="creature.type=='monster'" title="Monster"/>
+					{{creature.name}}
+				</td>
+				<td ng-class="{inactive: creature.original!=creature.effective}">
+					<img ng-src="images/shoes_icon.png" class="inline-square" title="Initiative"/>
+					{{creature.original}}
+				</td>
+				<td><span ng-if="creature.type=='monster'">
+					<img ng-src="images/potion_icon_black.png" class="inline-square" ng-show="creature.health > creature.fullHealth/2" title="Health"/>
+					<img ng-src="images/potion_icon_red.png" class="inline-square" ng-show="creature.health <= creature.fullHealth/2" title="Health"/>
+					{{creature.health}}
+				</span></td>
+				<td><span ng-if="creature.type=='monster'">
+					<input ng-model="creature.damage" size=2 />
+					<a><img ng-src="images/gun_icon_black.png" class="inline-square" ng-click="damageMonster(creature)" title="Damage"/></a>
+				</span></td>
+				<td>
+					<img ng-src="images/notebook_icon.png" class="inline-square" title="Notes"/>
+					<input size=10 />
+				</td>
+			</tr>
+		</table>
+	</div>
 
 </div>

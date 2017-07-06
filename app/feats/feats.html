@@ -1,0 +1,56 @@
+<div class="spellsMainBody">
+    <div class="preparedSpellList">
+        <h1>My Feats</h1>
+        <table class="preparedSpellTable">
+            <tr ng-repeat="feat in myFeats">
+                <td>({{feat.source}})</td>
+                <td><a ng-click="selectFeat(feat)">{{feat.name}}</a></td>
+                <td><button ng-click="removeFeat(feat)">&gt;&gt;</button></td>
+            </tr>
+        </table>
+    </div>
+    <div class="allSpellList">
+        <h1>All Feats</h1>
+        <p ng-show="isLoading" class="loading">LOADING...</p>
+        <div>
+            Search: <input ng-model="searchTerm"/> <a ng-click="searchTerm=''">X</a> <button ng-click="advancedSearch=!advancedSearch">Advanced Search</button>
+        </div>
+        <div ng-show="advancedSearch" class="advancedSearch">
+            Hide Feats with Unmet Prereq Feats: <input type="checkbox" ng-model="hideUnmetPrereqFeats" ng-click="filterFeats()"/>
+            Max BAB: <select selected="17" ng-model="maxBAB" ng-options="BAB for BAB in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]"></select><br>
+            <span ng-repeat="(key, value) in filters">
+                <button ng-click="value.showMenu=!value.showMenu">Filter by {{key}}</button>
+                <div ng-show="value.showMenu">
+                    <label><input type="checkbox" ng-model="value.showAll" ng-click="setFilterShowAll(key)" />ALL {{key.toUpperCase()}}</label>
+                    <label ng-repeat="option in value.options">
+                        <input type="checkbox" ng-model="option.show" ng-click="setFilterShowOne(key)" />{{option.name.toUpperCase()}}
+                    </label>
+                </div>
+            </span>
+            <span>
+                <button ng-click="skillFilter.showMenu=!skillFilter.showMenu">Filter by skill</button>
+                <div ng-show="skillFilter.showMenu">
+                    <span ng-repeat="skill in skills">
+                    </span>
+                </div>
+            </span>
+        </div>
+        <div>Showing {{filteredFeats.length}} out of {{feats.length}} feats</div>
+        <table class="spellTable">
+            <tr ng-repeat="feat in filteredFeats">
+                <td><button ng-click="addFeat(feat)">&lt;&lt;</button></td>
+                <td><a ng-click="selectFeat(feat)">{{feat.name}}</a></td>
+                <td>({{feat.source}})</td>
+            </tr>
+        </table>
+    </div>
+    <div class="spellDetail" ng-show="selectedFeat">
+        <h1>Feat Detail</h1>
+        <h2>{{selectedFeat.name}}</h2>
+        <h5 ng-show="selectedFeat.prerequisites">Prerequisites: {{selectedFeat.prerequisites}}</h5>
+        <p style="text-align:justify;">{{selectedFeat.description}}</p>
+        <p style="text-align:justify;">Benefit: {{selectedFeat.benefit}}</p>
+        <p style="text-align:justify;" ng-show="selectedFeat.normal">Normal: {{selectedFeat.normal}}</p>
+        <p style="text-align:justify;" ng-show="selectedFeat.special">Special: {{selectedFeat.special}}</p>
+    </div>
+</div>

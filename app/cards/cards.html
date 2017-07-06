@@ -1,0 +1,66 @@
+<h1>Card Generator</h1>
+<div style="display:flex;justify-content:space-around;align-items:flex-start;flex-wrap:wrap">
+	<div style="text-align:left;max-width:30%">
+		<h2>Instructions</h2>
+		<div>
+			<p>The card generator produces a card the size of a standard 3x5 index card.</p>
+			<p>The following tags are supported:</p>
+			<ul>
+				<li>&ltb&gtThis text is bold&lt/b&gt</li>
+				<li>&lti&gtThis text is italic&lt/i&gt</li>
+				<li>&ltline&gt Creates a horizontal line</li>
+				<li>&ltsubtitle&gtThis is a formatted subtitle&lt/subtitle&gt</li>
+				<li>&ltheader&gtThis is a formatted section header&lt/header&gt</li>
+				<li>&ltstatblock:1,2,3,4,5,6&gt Creates a formatted D&D statblock with ability scores 1, 2, 3, 4, 5, and 6</li>
+			</ul>
+			<p>Any cards you are currently working on are automatically saved to your browser's local storage, and retrieved when you revisit the page. This data will be accessible until you clear your browser's local storage, or click <button ng-click="clearDeck()">Clear Deck</button>.</p>
+		</div>
+	</div>
+	<div>
+		<h2>Content</h2>
+		<table class="cardInputTable">
+			<tr>
+				<td>Select Card</td>
+				<td style="display:flex">
+					<select ng-model="selectedCard" ng-options="card.leftHeader for card in cards"></select>
+					<button ng-click="createCard()">New Card</button>
+					<button ng-click="deleteCard()">Delete Card</button>
+					<button ng-click="viewSample()">Sample Card</button>
+				</td>
+			</tr>
+			<tr>
+				<td>Background Color</td>
+				<td><input ng-model="selectedCard.color" style="width:100%"/></td>
+			</tr>
+			<tr>
+				<td>Font Size</td>
+				<td><input ng-model="selectedCard.fontSize" style="width:100%"/></td>
+			</tr>
+			<tr>
+				<td>Left Header</td>
+				<td><input ng-model="selectedCard.leftHeader" style="width:100%"/></td>
+			</tr>
+			<tr>
+				<td>Right Header</td>
+				<td><input ng-model="selectedCard.rightHeader" style="width:100%"/></td>
+			</tr>
+			<tr>
+				<td>Content</td>
+				<td><textarea class="contentInput" rows="20" ng-model="selectedCard.content" style="width:100%"></textarea></td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<h2>Preview</h2>
+		<div id="cardContainer">
+			<div class="indexCard" id="card">
+				<div class="headerContainer">
+					<div class="headerLeft">{{selectedCard.leftHeader}}</div>
+					<div class="headerRight">{{selectedCard.rightHeader}}</div>
+				</div>
+				<div class="contentContainer" id="cardContent"></div>
+			</div>
+		</div>
+		<button ng-click="newWindow()">Open in New Window</button>
+	</div>
+</div>
