@@ -9,7 +9,10 @@
 				NAME <input ng-model="inputs.newPlayerName" />
 				<button ng-click="addPlayer()">ADD</button>
 			</form>
-			<div><button ng-click="players=[]" ng-show="players.length > 0">CLEAR</button></div>
+			<div>
+				<button ng-click="players=[]" ng-show="players.length > 0">CLEAR</button>
+				<button ng-click="addAllPlayersToInitiative()" ng-show="players.length > 0">ADD ALL</button>
+			</div>
 			<table class="initTable" ng-show="players.length > 0">
 				<tr ng-repeat="player in players">
 					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removePlayer(player)" title="Remove"/></td>
