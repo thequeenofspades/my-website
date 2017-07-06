@@ -20,8 +20,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return player.name != playerName;
 		})) {
 			$scope.players.push({name: playerName});
-			$scope.players = $scope.players.sort();
-			console.log($scope.players);
+			$scope.players = $scope.players.sort(function(a, b) { return a.name - b.name });
 			$scope.inputs.initiatives[playerName] = 0;
 		}
 		$scope.inputs.newPlayerName = "";
