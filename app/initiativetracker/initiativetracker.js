@@ -59,7 +59,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	}
 	//Add player to initiative order
 	$scope.addPlayerToInitiative = function(player) {
-		initiative = Math.floor(Math.random()*(20)) + 1 + parseFloat(player.mod);		// generate random initiative 1-20
+		var initiative = Math.floor(Math.random()*(20)) + 1 + parseFloat(player.mod);		// generate random initiative 1-20
 		$scope.initiativeOrder.push({type: 'player', name: player.name, original: initiative, effective: initiative});
 		sortInitiativeOrder();
 	};
