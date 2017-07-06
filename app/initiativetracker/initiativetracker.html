@@ -21,8 +21,8 @@
 						{{player.name}}
 					</td>
 					<td><form>
-						<input ng-model="inputs.initiatives[player.name]" size=1 />
-						<button ng-click="addPlayerToInitiative(player, inputs.initiatives[player.name])">+</button>
+						MOD<input ng-model="player.mod" size=1 />
+						<button ng-click="addPlayerToInitiative(player)">+</button>
 					</form></td>
 				</tr>
 			</table>
