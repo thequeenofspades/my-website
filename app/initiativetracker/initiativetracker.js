@@ -21,8 +21,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		})) {
 			$scope.players.push({name: playerName});
 			$scope.players = $scope.players.sort(function(a, b) { return a.name > b.name });
-			console.log($scope.players);
-			console.log($scope.players[0].name);
 			$scope.inputs.initiatives[playerName] = 0;
 		}
 		$scope.inputs.newPlayerName = "";
@@ -60,9 +58,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		}), 1);
 	}
 	//Add player to initiative order
-	$scope.addPlayerToInitiative = function(player, initiative) {
-		$scope.initiativeOrder.push({type: 'player', name: player.name, original: initiative, effective: parseFloat(initiative)});
-		$scope.inputs.initiatives[player.name] = 0;
+	$scope.addPlayerToInitiative = function(player, mod) {
+		initiative = Math.floor(Math.random()*(20)) + 1 + parseFloat(mod);		// generate random initiative 1-20
+		$scope.initiativeOrder.push({type: 'player', name: player.name, original: initiative, effective: initiative});
 		sortInitiativeOrder();
 	};
 	//Add monster to initiative order
