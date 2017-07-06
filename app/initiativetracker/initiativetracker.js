@@ -21,6 +21,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		})) {
 			$scope.players.push({name: playerName});
 			$scope.players = $scope.players.sort();
+			console.log($scope.players);
 			$scope.inputs.initiatives[playerName] = 0;
 		}
 		$scope.inputs.newPlayerName = "";
