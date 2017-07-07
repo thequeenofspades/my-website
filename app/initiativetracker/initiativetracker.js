@@ -105,7 +105,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			fullHealth: monster.health,
 			health: monster.health,
 			mod: parseFloat(monster.mod),
-			reordered = false};
+			reordered: false};
 		$scope.removeMonster(monster);
 		$scope.addCreatureToInitiative(creature);
 	}
