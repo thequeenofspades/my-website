@@ -71,8 +71,8 @@
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
 			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}">
 				<td>
-					<a><img ng-src="images/arrow_up_icon_black.png" ng-click="reorderInitiative(creature, 1)" class="inline-square" title="Move Up"/></a>
-					<a><img ng-src="images/arrow_down_icon_black.png" ng-click="reorderInitiative(creature, -1)" class="inline-square" title="Move Down"/></a>
+					<a><img ng-src="images/arrow_up_icon_black.png" ng-click="reorderInitiative(creature, -1)" class="inline-square" title="Move Up"/></a>
+					<a><img ng-src="images/arrow_down_icon_black.png" ng-click="reorderInitiative(creature, 1)" class="inline-square" title="Move Down"/></a>
 				</td>
 				<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeFromInititiative(creature)" title="Remove"/></td>
 				<td>
