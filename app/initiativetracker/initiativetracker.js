@@ -144,6 +144,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	};
 	//Decrease turn tracker by one
 	$scope.previousTurn = function() {
-		$scope.active = ($scope.active - 1) % $scope.initiativeOrder.length;
+		var m = $scope.initiativeOrder.length;
+		$scope.active = ((($scope.active - 1) % m) + m) % m;
 	};
 }]);
