@@ -71,7 +71,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	};
 	//Add monster to initiative order
 	$scope.addMonsterToInitiative = function(monster) {
-		initiative = parseFloat(monster.initiative) + parseFloat(monster.mod);
+		var initiative = parseFloat(monster.initiative) + parseFloat(monster.mod);
 		$scope.initiativeOrder.push({type: 'monster', name: monster.name, original: initiative, effective: initiative, fullHealth: monster.health, health: monster.health, mod: parseFloat(monster.mod)});
 		$scope.removeMonster(monster);
 		sortInitiativeOrder();
