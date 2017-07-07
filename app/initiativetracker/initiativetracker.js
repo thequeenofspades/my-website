@@ -57,16 +57,37 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return currMonster.name == monster.name;
 		}), 1);
 	}
+	//Add a player or monster to initiative order
+	$scope.addCreatureToInitiative = function(creature) {
+		//Insert creature before first creature found with lower initiative
+		var indexToInsert = $scope.initiativeOrder.findIndex(function(a) {
+			if (a.reordered) { return false; }			//if creature has been moved, skip
+			if (a.initiative === creature.initiative) {		//compare initiative modifiers
+				if (a.mod === creature.mod) {			//random roll-off
+					var aRolloff = Math.random();
+					var bRolloff = Math.random();
+					return aRolloff <= bRolloff;
+				}
+				return a.mod < b.mod;
+			}
+			return a.initiative < b.initiative;
+		});
+		if (indexToInsert < 0) {					//found no unmoved creature with lower initiative
+			$scope.initiativeOrder.push(creature);
+		} else {
+			$scope.initiativeOrder.splice(indexToInsert, 0, creature);
+		}
+	};
 	//Add player to initiative order
 	$scope.addPlayerToInitiative = function(player) {
 		var initiative = Math.floor(Math.random()*(20)) + 1 + parseFloat(player.mod);		// generate random initiative 1-20
-		$scope.initiativeOrder.push({
+		var creature = {
 			type: 'player',
 			name: player.name,
-			original: initiative,
-			effective: initiative,
-			mod: parseFloat(player.mod)});
-		sortInitiativeOrder();
+			initiative: initiative
+			mod: parseFloat(player.mod),
+			reordered: false};
+		$scope.addCreatureToInitiative(creature);
 	};
 	//Add all players to initiative order
 	$scope.addAllPlayersToInitiative = function() {
@@ -77,16 +98,16 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	//Add monster to initiative order
 	$scope.addMonsterToInitiative = function(monster) {
 		var initiative = parseFloat(monster.initiative) + parseFloat(monster.mod);
-		$scope.initiativeOrder.push({
+		var creature = {
 			type: 'monster',
 			name: monster.name,
 			original: initiative,
 			effective: initiative,
 			fullHealth: monster.health,
 			health: monster.health,
-			mod: parseFloat(monster.mod)});
+			mod: parseFloat(monster.mod)};
 		$scope.removeMonster(monster);
-		sortInitiativeOrder();
+		$scope.addCreatureToInitiative(creature);
 	}
 	//Add all monsters to initiative order
 	$scope.addAllMonstersToInitiative = function() {
@@ -101,8 +122,11 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	};
 	//Move creature up or down in initiative order
 	$scope.reorderInitiative = function(creature, offset) {
+		creature.reordered = true;
 		var index = $scope.initiativeOrder.indexOf(creature);
-		if (offset > 0) { 												// move up in initiative order (towards front of list)
+		$scope.initiativeOrder.splice(index, 1);			// remove from initiative order
+		$scope.initiativeOrder.splice(index + offset, 0, creature);	// reinsert
+		/*if (offset > 0) { 												// move up in initiative order (towards front of list)
 			if (index > 0) {											// if not already first
 				var neighbor = $scope.initiativeOrder[index-1]; 		// creature right above
 				if (index > 1) {										// if not second
@@ -123,7 +147,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				}
 			}
 		}
-		sortInitiativeOrder();
+		sortInitiativeOrder();*/
 	};
 	//Subtract damage from a creature's health
 	$scope.damageMonster = function(monster) {
