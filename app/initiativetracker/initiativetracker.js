@@ -125,6 +125,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		creature.reordered = true;
 		var index = $scope.initiativeOrder.indexOf(creature);
 		$scope.initiativeOrder.splice(index, 1);			// remove from initiative order
+		if (index + offset > $scope.initiativeOrder.length) {		// creature already at bottom, moved down
+			$scope.initiativeOrder.splice(0, 0, creature);		// insert at top
+		}
 		$scope.initiativeOrder.splice(index + offset, 0, creature);	// reinsert
 		/*if (offset > 0) { 												// move up in initiative order (towards front of list)
 			if (index > 0) {											// if not already first
