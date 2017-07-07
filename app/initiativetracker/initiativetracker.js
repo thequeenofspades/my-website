@@ -101,11 +101,11 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		var creature = {
 			type: 'monster',
 			name: monster.name,
-			original: initiative,
-			effective: initiative,
+			initiative: initiative,
 			fullHealth: monster.health,
 			health: monster.health,
-			mod: parseFloat(monster.mod)};
+			mod: parseFloat(monster.mod),
+			reordered = false};
 		$scope.removeMonster(monster);
 		$scope.addCreatureToInitiative(creature);
 	}
