@@ -12,7 +12,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.players = [];
 	$scope.monsters = [];
 	$scope.active = 0;
-	$scope.inputs = {initiatives: {}, numNewMonsters: 1, newMonsterHealth: 10, newMonsterInitMod: 0};
+	$scope.inputs = {initiatives: {}, numNewMonsters: 1, newMonsterHealth: 0, newMonsterInitMod: 0};
 	//Add player to player list
 	$scope.addPlayer = function() {
 		var playerName = $scope.inputs.newPlayerName.toUpperCase().trim();
@@ -21,7 +21,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		})) {
 			$scope.players.push({name: playerName, mod: 0});
 			$scope.players = $scope.players.sort(function(a, b) { return a.name > b.name });
-			$scope.inputs.initiatives[playerName] = 0;
 		}
 		$scope.inputs.newPlayerName = "";
 	};
@@ -76,6 +75,13 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.inputs.initiatives[monster.name] = '';
 		$scope.removeMonster(monster);
 		sortInitiativeOrder();
+	}
+	//Add all monsters to initiative order
+	$scope.addAllMonstersToInitiative = function() {
+		var monstersCopy = $scope.monsters.slice();
+		for (var i = 0; i < monstersCopy.length; i++) {
+			$scope.addMonsterToInitiative(monstersCopy[i], $scope.initiatives[monstersCopy[i].name]);
+		}
 	}
 	//Remove creature from initiative order
 	$scope.removeFromInititiative = function(creature) {
