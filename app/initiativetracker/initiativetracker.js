@@ -80,7 +80,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.addAllMonstersToInitiative = function() {
 		var monstersCopy = $scope.monsters.slice();
 		for (var i = 0; i < monstersCopy.length; i++) {
-			$scope.addMonsterToInitiative(monstersCopy[i], $scope.initiatives[monstersCopy[i].name]);
+			$scope.addMonsterToInitiative(monstersCopy[i], $scope.inputs.initiatives[monstersCopy[i].name]);
 		}
 	}
 	//Remove creature from initiative order
