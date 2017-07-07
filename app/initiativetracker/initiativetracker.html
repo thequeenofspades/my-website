@@ -9,11 +9,11 @@
 				NAME <input ng-model="inputs.newPlayerName" />
 				<button ng-click="addPlayer()">ADD</button>
 			</form>
-			<div>
-				<button ng-click="showPlayers = false" ng-show="players.length > 0 && showPlayers">HIDE</button>
-				<button ng-click="showPlayers = true" ng-show="players.length > 0 && !showPlayers">SHOW</button>
-				<button ng-click="players=[]" ng-show="players.length > 0">CLEAR</button>
-				<button ng-click="addAllPlayersToInitiative()" ng-show="players.length > 0">ADD ALL</button>
+			<div ng-show="players.length > 0">
+				<button ng-click="showPlayers = false" ng-show="showPlayers">HIDE</button>
+				<button ng-click="showPlayers = true" ng-show="!showPlayers">SHOW</button>
+				<button ng-click="players=[]">CLEAR</button>
+				<button ng-click="addAllPlayersToInitiative()" ng-show="players.length > 1">ADD ALL</button>
 			</div>
 			<table class="initTable" ng-show="players.length > 0 && showPlayers">
 				<tr ng-repeat="player in players">
@@ -40,9 +40,9 @@
 				QUANTITY <input ng-model="inputs.numNewMonsters" size=1 />
 				<button ng-click="addMonster()">ADD</button>
 			</form>
-			<div>
-				<button ng-click="monsters=[]" ng-show="monsters.length > 0">CLEAR</button>
-				<button ng-click="addAllMonstersToInitiative()" ng-show="monsters.length > 0">ADD ALL</button>
+			<div ng-show="monsters.length > 0">
+				<button ng-click="monsters=[]">CLEAR</button>
+				<button ng-click="addAllMonstersToInitiative()" ng-show="monsters.length > 1">ADD ALL</button>
 			</div>
 			<table class="initTable" ng-show="monsters.length > 0">
 				<tr ng-repeat="monster in monsters">
@@ -67,7 +67,8 @@
 	<div>
 		<h2>Initiative Order</h2>
 		<button ng-click="initiativeOrder=[]" ng-show="initiativeOrder.length > 0">CLEAR</button>
-		<button ng-click="active = (active + 1) % initiativeOrder.length" ng-show="initiativeOrder.length > 0">ADVANCE</button>
+		<button ng-click="previousTurn()" ng-show="initiativeOrder.length > 0">PREVIOUS</button>
+		<button ng-click="advanceTurn()" ng-show="initiativeOrder.length > 0">ADVANCE</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
 			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}">
 				<td>
