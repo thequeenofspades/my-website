@@ -38,7 +38,10 @@
 				QUANTITY <input ng-model="inputs.numNewMonsters" size=1 />
 				<button ng-click="addMonster()">ADD</button>
 			</form>
-			<div><button ng-click="monsters=[]" ng-show="monsters.length > 0">CLEAR</button></div>
+			<div>
+				<button ng-click="monsters=[]" ng-show="monsters.length > 0">CLEAR</button>
+				<button ng-click="addAllMonstersToInitiative()" ng-show="monsters.length > 0">ADD ALL</button>
+			</div>
 			<table class="initTable" ng-show="monsters.length > 0">
 				<tr ng-repeat="monster in monsters">
 					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeMonster(monster)" title="Remove"/></td>
