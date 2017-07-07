@@ -56,9 +56,9 @@
 						{{monster.health}}
 					</td>
 					<td><form>
-						<input ng-model="inputs.initiatives[monster.name]" size=1 />
+						<input ng-model="monster.initiative" size=1 />
 						<span ng-show="monster.mod >= 0">+</span>{{monster.mod}}
-						<button ng-click="addMonsterToInitiative(monster, inputs.initiatives[monster.name])">+</button>
+						<button ng-click="addMonsterToInitiative(monster)">+</button>
 					</form></td>
 				</tr>
 			</table>
