@@ -80,9 +80,9 @@
 					<img ng-src="images/heart_icon_black.png" class="inline-square" ng-show="creature.type=='monster'" title="Monster"/>
 					{{creature.name}}
 				</td>
-				<td ng-class="{inactive: creature.original!=creature.effective}">
+				<td ng-class="{inactive: creature.reordered}">
 					<img ng-src="images/shoes_icon.png" class="inline-square" title="Initiative"/>
-					{{creature.original}}
+					{{creature.initiative}}
 				</td>
 				<td><span ng-if="creature.type=='monster'">
 					<img ng-src="images/potion_icon_black.png" class="inline-square" ng-show="creature.health > creature.fullHealth/2" title="Health"/>
