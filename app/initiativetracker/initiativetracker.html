@@ -10,10 +10,12 @@
 				<button ng-click="addPlayer()">ADD</button>
 			</form>
 			<div>
+				<button ng-click="showPlayers = False" ng-show="players.length > 0 && showPlayers">HIDE</button>
+				<button ng-click="showPlayers = True" ng-show="players.length > 0 && !showPlayers">SHOW</button>
 				<button ng-click="players=[]" ng-show="players.length > 0">CLEAR</button>
 				<button ng-click="addAllPlayersToInitiative()" ng-show="players.length > 0">ADD ALL</button>
 			</div>
-			<table class="initTable" ng-show="players.length > 0">
+			<table class="initTable" ng-show="players.length > 0 && showPlayers">
 				<tr ng-repeat="player in players">
 					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removePlayer(player)" title="Remove"/></td>
 					<td>
