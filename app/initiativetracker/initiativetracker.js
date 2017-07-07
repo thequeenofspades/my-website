@@ -68,9 +68,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 					var bRolloff = Math.random();
 					return aRolloff <= bRolloff;
 				}
-				return a.mod < b.mod;
+				return a.mod < creature.mod;
 			}
-			return a.initiative < b.initiative;
+			return a.initiative < creature.initiative;
 		});
 		if (indexToInsert < 0) {					//found no unmoved creature with lower initiative
 			$scope.initiativeOrder.push(creature);
