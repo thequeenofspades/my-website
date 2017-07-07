@@ -76,7 +76,6 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.initiativeOrder.push(creature);			//insert at bottom
 		} else {
 			$scope.initiativeOrder.splice(indexToInsert, 0, creature);	//insert before found creature
-			if ($scope.active >= indexToInsert) { $scope.active += 1; }	//don't change current turn
 		}
 	};
 	//Add player to initiative order
@@ -142,5 +141,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	//Advance turn forward
 	$scope.advanceTurn = function() {
 		$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
+	};
+	//Decrease turn tracker by one
+	$scope.previousTurn = function() {
+		$scope.active = ($scope.active - 1) % $scope.initiativeOrder.length;
 	};
 }]);
