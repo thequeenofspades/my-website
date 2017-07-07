@@ -84,7 +84,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		var creature = {
 			type: 'player',
 			name: player.name,
-			initiative: initiative
+			initiative: initiative,
 			mod: parseFloat(player.mod),
 			reordered: false};
 		$scope.addCreatureToInitiative(creature);
