@@ -12,6 +12,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.players = [];
 	$scope.monsters = [];
 	$scope.active = 0;
+	$scope.showPlayers = True;
 	$scope.inputs = {initiatives: {}, numNewMonsters: 1, newMonsterHealth: 0, newMonsterInitMod: 0};
 	//Add player to player list
 	$scope.addPlayer = function() {
