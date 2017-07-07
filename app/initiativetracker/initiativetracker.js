@@ -73,9 +73,10 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return a.initiative < creature.initiative;
 		});
 		if (indexToInsert < 0) {					//found no unmoved creature with lower initiative
-			$scope.initiativeOrder.push(creature);
+			$scope.initiativeOrder.push(creature);			//insert at bottom
 		} else {
-			$scope.initiativeOrder.splice(indexToInsert, 0, creature);
+			$scope.initiativeOrder.splice(indexToInsert, 0, creature);	//insert before found creature
+			if ($scope.active >= indexToInsert) { $scope.active += 1; }	//don't change current turn
 		}
 	};
 	//Add player to initiative order
@@ -127,44 +128,19 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.initiativeOrder.splice(index, 1);			// remove from initiative order
 		if (index + offset > $scope.initiativeOrder.length) {		// creature already at bottom, moved down
 			$scope.initiativeOrder.splice(0, 0, creature);		// insert at top
+		} else if (index + offset < 0) {
+			$scope.initiativeOrder.push(creature);			// insert at bottom
 		} else {
 			$scope.initiativeOrder.splice(index + offset, 0, creature);	// reinsert
 		}
-		/*if (offset > 0) { 												// move up in initiative order (towards front of list)
-			if (index > 0) {											// if not already first
-				var neighbor = $scope.initiativeOrder[index-1]; 		// creature right above
-				if (index > 1) {										// if not second
-					var nextNeighbor = $scope.initiativeOrder[index-2];
-					creature.effective = (neighbor.effective + nextNeighbor.effective)/2;	// set new effective init to halfway between the two above
-				} else {												// if second
-					creature.effective = neighbor.effective + 1;							// set new effective init to 1 more than the upstairs neighbor
-				}
-			}
-		} else if (offset < 0) {										// move down in initiative order (towards end of list)
-			if (index+1 < $scope.initiativeOrder.length) {				// if not already last
-				var neighbor = $scope.initiativeOrder[index+1];			// creature right below
-				if (index+2 < $scope.initiativeOrder.length) {
-					var nextNeighbor = $scope.initiativeOrder[index+2];
-					creature.effective = (neighbor.effective + nextNeighbor.effective)/2;
-				} else {
-					creature.effective = neighbor.effective - 1;
-				}
-			}
-		}
-		sortInitiativeOrder();*/
 	};
 	//Subtract damage from a creature's health
 	$scope.damageMonster = function(monster) {
 		monster.health = monster.health - monster.damage;
 		monster.damage = 0;
-	}
-	//Sort initiative order
-	function sortInitiativeOrder() {
-		$scope.initiativeOrder.sort(function(a, b) {
-			if (a.effective === b.effective) {
-				return b.mod - a.mod;
-			}
-			return b.effective - a.effective;
-		});
-	}
+	};
+	//Advance turn forward
+	$scope.advanceTurn = function() {
+		$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
+	};
 }]);
