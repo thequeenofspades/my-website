@@ -13,7 +13,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.monsters = [];
 	$scope.active = 0;
 	$scope.showPlayers = true;
-	$scope.inputs = {initiatives: {}, numNewMonsters: 1, newMonsterHealth: 0, newMonsterInitMod: 0};
+	$scope.inputs = {numNewMonsters: 1, newMonsterHealth: 0, newMonsterInitMod: 0};
 	//Add player to player list
 	$scope.addPlayer = function() {
 		var playerName = $scope.inputs.newPlayerName.toUpperCase().trim();
@@ -42,8 +42,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			if ($scope.monsters.every(function(monster) {
 				return monster.name != monsterName;
 			})) {
-				$scope.monsters.push({name: monsterName, health: $scope.inputs.newMonsterHealth, mod: $scope.inputs.newMonsterInitMod});
-				$scope.inputs.initiatives[monsterName] = Math.floor(Math.random()*(20)) + 1;		// generate random initiative 1-20
+				var initiative = Math.floor(Math.random()*(20)) + 1;
+				$scope.monsters.push({name: monsterName, health: $scope.inputs.newMonsterHealth, initiative: initiative, mod: $scope.inputs.newMonsterInitMod});
 			}
 		}
 		$scope.inputs.newMonster = "";
@@ -70,10 +70,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		}
 	};
 	//Add monster to initiative order
-	$scope.addMonsterToInitiative = function(monster, initiative) {
-		initiative = parseFloat(initiative) + parseFloat(monster.mod);
+	$scope.addMonsterToInitiative = function(monster) {
+		initiative = parseFloat(monster.initiative) + parseFloat(monster.mod);
 		$scope.initiativeOrder.push({type: 'monster', name: monster.name, original: initiative, effective: initiative, fullHealth: monster.health, health: monster.health, mod: parseFloat(monster.mod)});
-		$scope.inputs.initiatives[monster.name] = '';
 		$scope.removeMonster(monster);
 		sortInitiativeOrder();
 	}
@@ -81,7 +80,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.addAllMonstersToInitiative = function() {
 		var monstersCopy = $scope.monsters.slice();
 		for (var i = 0; i < monstersCopy.length; i++) {
-			$scope.addMonsterToInitiative(monstersCopy[i], $scope.inputs.initiatives[monstersCopy[i].name]);
+			$scope.addMonsterToInitiative(monstersCopy[i]);
 		}
 	}
 	//Remove creature from initiative order
