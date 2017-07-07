@@ -67,7 +67,7 @@
 	<div>
 		<h2>Initiative Order</h2>
 		<button ng-click="initiativeOrder=[]" ng-show="initiativeOrder.length > 0">CLEAR</button>
-		<button ng-click="active = (active + 1) % initiativeOrder.length">ADVANCE</button>
+		<button ng-click="active = (active + 1) % initiativeOrder.length" ng-show="initiativeOrder.length > 0">ADVANCE</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
 			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}">
 				<td>
