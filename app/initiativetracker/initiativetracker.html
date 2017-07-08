@@ -70,7 +70,7 @@
 		<button ng-click="previousTurn()" ng-show="initiativeOrder.length > 0">PREVIOUS</button>
 		<button ng-click="advanceTurn()" ng-show="initiativeOrder.length > 0">ADVANCE</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
-			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}">
+			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}" draggable=true>
 				<td>
 					<a><img ng-src="images/arrow_up_icon_black.png" ng-click="reorderInitiative(creature, -1)" class="inline-square" title="Move Up"/></a>
 					<a><img ng-src="images/arrow_down_icon_black.png" ng-click="reorderInitiative(creature, 1)" class="inline-square" title="Move Down"/></a>
