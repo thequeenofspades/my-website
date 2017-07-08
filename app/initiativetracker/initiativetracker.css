@@ -43,6 +43,10 @@
 	background-color: rgba(217, 136, 128,0.5);
 }
 
+.delayed {
+	background-color: rgba(229, 194, 191, 0.5);
+}
+
 .remove-icon:hover {
 	cursor: pointer;
 	color: #9B59B6;
