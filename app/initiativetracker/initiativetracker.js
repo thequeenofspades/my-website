@@ -86,7 +86,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			name: player.name,
 			initiative: initiative,
 			mod: parseFloat(player.mod),
-			reordered: false};
+			reordered: false,
+			delayed: false};
 		$scope.addCreatureToInitiative(creature);
 	};
 	//Add all players to initiative order
@@ -105,7 +106,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			fullHealth: monster.health,
 			health: monster.health,
 			mod: parseFloat(monster.mod),
-			reordered: false};
+			reordered: false,
+			delayed: false};
 		$scope.removeMonster(monster);
 		$scope.addCreatureToInitiative(creature);
 	}
@@ -124,23 +126,38 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.reorderInitiative = function(creature, offset) {
 		creature.reordered = true;
 		var index = $scope.initiativeOrder.indexOf(creature);
+		var m = $scope.initiativeOrder.length;
+		var insertIndex = (((index + offset) % m) + m) % m;
 		$scope.initiativeOrder.splice(index, 1);			// remove from initiative order
-		if (index + offset > $scope.initiativeOrder.length) {		// creature already at bottom, moved down
+		$scope.initiativeOrder.splice(insertIndex, 0, creature);	// reinsert
+		/*if (index + offset > $scope.initiativeOrder.length) {		// creature already at bottom, moved down
 			$scope.initiativeOrder.splice(0, 0, creature);		// insert at top
 		} else if (index + offset < 0) {
 			$scope.initiativeOrder.push(creature);			// insert at bottom
 		} else {
 			$scope.initiativeOrder.splice(index + offset, 0, creature);	// reinsert
-		}
+		}*/
 	};
 	//Subtract damage from a creature's health
 	$scope.damageMonster = function(monster) {
 		monster.health = monster.health - monster.damage;
 		monster.damage = 0;
 	};
+	//Turn creature a different color to indicate that it is delayed or has a readied action waiting
+	$scope.delayCreature = function(creature) {
+		creature.delayed = true;
+	};
+	//Creature's readied action triggered - reinsert into initiative
+	$scope.undelayCreature = function(creature) {
+		var currentIndex = $scope.initiativeOrder.indexOf(creature);
+		var offset = $scope.active - currentIndex;
+		$scope.reorderInitiative(creature, offset);
+		creature.delayed = false;
+	}
 	//Advance turn forward
 	$scope.advanceTurn = function() {
 		$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
+		$initiativeOrder[$scope.active].delayed = false;
 	};
 	//Decrease turn tracker by one
 	$scope.previousTurn = function() {
