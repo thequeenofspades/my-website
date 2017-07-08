@@ -157,7 +157,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	//Advance turn forward
 	$scope.advanceTurn = function() {
 		$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
-		$initiativeOrder[$scope.active].delayed = false;
+		$scope.initiativeOrder[$scope.active].delayed = false;
 	};
 	//Decrease turn tracker by one
 	$scope.previousTurn = function() {
