@@ -70,7 +70,7 @@
 		<button ng-click="previousTurn()" ng-show="initiativeOrder.length > 0">PREVIOUS</button>
 		<button ng-click="advanceTurn()" ng-show="initiativeOrder.length > 0">ADVANCE</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
-			<tr ng-repeat="creature in initiativeOrder" ng-class="{inactive: creature.health <= 0, active: creature == initiativeOrder[active]}" draggable=true>
+			<tr ng-repeat="creature in initiativeOrder" ng-class="{delayed: creature.delayed, inactive: creature.health <= 0, active: creature == initiativeOrder[active]}" draggable=true>
 				<td>
 					<a><img ng-src="images/arrow_up_icon_black.png" ng-click="reorderInitiative(creature, -1)" class="inline-square" title="Move Up"/></a>
 					<a><img ng-src="images/arrow_down_icon_black.png" ng-click="reorderInitiative(creature, 1)" class="inline-square" title="Move Down"/></a>
@@ -80,6 +80,10 @@
 					<img ng-src="images/heart_icon_red.png" class="inline-square" ng-show="creature.type=='player'" title="Player"/>
 					<img ng-src="images/heart_icon_black.png" class="inline-square" ng-show="creature.type=='monster'" title="Monster"/>
 					{{creature.name}}
+				</td>
+				<td>
+					<button ng-click="delayCreature(creature)" ng-show="creature.delayed === false">DELAY</button>
+					<button ng-click="undelayCreature(creature)" ng-show="creature.delayed">UNDELAY</button>
 				</td>
 				<td ng-class="{inactive: creature.reordered}">
 					<img ng-src="images/shoes_icon.png" class="inline-square" title="Initiative"/>
