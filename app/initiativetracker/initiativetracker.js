@@ -164,4 +164,36 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		var m = $scope.initiativeOrder.length;
 		$scope.active = ((($scope.active - 1) % m) + m) % m;
 	};
+	//Save to local storage
+	$scope.save = function() {
+		if (typeof(Storage) !== "undefined") {
+			var initiativeData = {
+				"players": $scope.players,
+				"monsters": $scope.monsters,
+				"order": $scope.initiativeOrder,
+				"active": $scope.active};
+			localStorage.setItem("initiativeData", angular.toJson(initiativeData));
+			console.log("Saved to local storage: ", angular.toJson(initiativeData));
+		}
+	};
+	//Load from local storage
+	$scope.load = function() {
+		if (typeof(Storage) !== "undefined") {
+			if (localStorage.getItem("initiativeData") !== null) {
+				var initiativeData = angular.fromJson(localStorage.getItem("initiativeData"));
+				$scope.players = initiativeData.players;
+				$scope.monsters = initiativeData.monsters;
+				$scope.initiativeOrder = initiativeData.order;
+				$scope.active = initiativeData.active;
+				console.log("Retrieved from local storage: ", angular.fromJson(localStorage.getItem("initiativeData")));
+			} else { console.log("No initiative data saved in local storage."); }
+		} else { console.log("Couldn't access local storage."); }
+	};
+	
+	$scope.$watch('initiativeOrder', function() { $scope.save(); });
+	$scope.$watch('players', function() { $scope.save(); });
+	$scope.$watch('monsters', function() { $scope.save(); });
+	$scope.$watch('active', function() { $scope.save(); });
+	
+	$scope.load();
 }]);
