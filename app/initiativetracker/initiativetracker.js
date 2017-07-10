@@ -249,8 +249,10 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.$watch('players', function() { $scope.save(); }, true);
 	$scope.$watch('monsters', function() { $scope.save(); }, true);
 	$scope.$watch('active', function() { $scope.save(); });
+	$scope.$watch('encounters', function() { $scope.save(); }, true);
+	$scope.$watch('currentEncounter', function() { $scope.save(); }, true);
 	
-	$scope.load();
+	//$scope.load();
 	
 	if ($scope.currentEncounter === {}) {
 		console.log("Initializing empty encounter");
