@@ -252,9 +252,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.$watch('encounters', function() { $scope.save(); }, true);
 	$scope.$watch('currentEncounter', function() { $scope.save(); }, true);
 	
-	//$scope.load();
+	$scope.load();
 	
-	if ($scope.currentEncounter === {}) {
+	if ($scope.currentEncounter === {} || $scope.encounters.length == 0) {
 		console.log("Initializing empty encounter");
 		$scope.currentEncounter = $scope.newEncounter();
 	}
