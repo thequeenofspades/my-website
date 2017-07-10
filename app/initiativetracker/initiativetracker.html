@@ -31,6 +31,9 @@
 		</div>
 		<div>
 			<h2>Monsters</h2>
+			<select ng-options="encounter.name for encounter in encounters" ng-select="currentEncounter"></select>
+			<button ng-click="newEncounter()">CREATE ENCOUNTER</button>
+			ENCOUNTER <input ng-model="currentEncounter.name" />
 			<form>
 				NAME <input ng-model="inputs.newMonster" />
 				<br>
@@ -38,15 +41,15 @@
 				INIT MOD <input ng-model="inputs.newMonsterInitMod" size=1 />
 				<br>
 				QUANTITY <input ng-model="inputs.numNewMonsters" size=1 />
-				<button ng-click="addMonster()">ADD</button>
+				<button ng-click="addMonsterToEncounter()">ADD</button>
 			</form>
-			<div ng-show="monsters.length > 0">
-				<button ng-click="monsters=[]">CLEAR</button>
-				<button ng-click="addAllMonstersToInitiative()" ng-show="monsters.length > 1">ADD ALL</button>
+			<div ng-show="currentEncounter.monsters.length > 0">
+				<button ng-click="currentEncounter.monsters=[]">CLEAR</button>
+				<button ng-click="addEncounterToInitiative()" ng-show="currentEncounter.monsters.length > 1">ADD ALL</button>
 			</div>
-			<table class="initTable" ng-show="monsters.length > 0">
-				<tr ng-repeat="monster in monsters">
-					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeMonster(monster)" title="Remove"/></td>
+			<table class="initTable" ng-show="currentEncounter.monsters.length > 0">
+				<tr ng-repeat="monster in currentEncounter.monsters">
+					<td><img ng-src="images/trashcan_icon.png" class="inline-square remove-icon" ng-click="removeMonsterFromEncounter(monster)" title="Remove"/></td>
 					<td>
 						<img ng-src="images/heart_icon_black.png" class="inline-square" title="Monster"/>
 						{{monster.name}}
