@@ -10,6 +10,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 .controller('InitTrackerCtrl', ['$scope', function($scope) {
 	$scope.initiativeOrder = [];
 	$scope.players = [];
+	$scope.encounters = [];
+	$scope.currentEncounter = {};
 	$scope.monsters = [];
 	$scope.active = 0;
 	$scope.showPlayers = true;
@@ -30,7 +32,27 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.players.splice($scope.players.findIndex(function(currPlayer) {
 			return currPlayer.name == player.name;
 		}), 1);
-	}
+	};
+	//Add monster(s) to the current encounter
+	$scope.addMonsterToEncounter = function() {
+		for (var i = 0; i < parseInt($scope.inputs.numNewMonsters); i++) {
+			if (parseInt($scope.inputs.numNewMonsters) > 1) {
+				var monsterName = $scope.inputs.newMonster.toUpperCase().trim() + " " + (i+1);
+			} else {
+				var monsterName = $scope.inputs.newMonster.toUpperCase().trim();
+			}
+			if ($scope.currentEncounter.monsters.every(function(monster) {
+				return monster.name != monsterName;
+			})) {
+				var initiative = Math.floor(Math.random()*(20)) + 1;
+				$scope.currentEncounter.monsters.push({name: monsterName, health: $scope.inputs.newMonsterHealth, initiative: initiative, mod: $scope.inputs.newMonsterInitMod});
+			}
+		}
+		$scope.inputs.newMonster = "";
+		$scope.inputs.newMonsterHealth = 10;
+		$scope.inputs.numNewMonsters = 1;
+		$scope.inputs.newMonsterInitMod = 0;
+	};
 	//Add monster(s) to monster list
 	$scope.addMonster = function() {
 		for (var i = 0; i < parseInt($scope.inputs.numNewMonsters); i++) {
@@ -50,13 +72,35 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.inputs.newMonsterHealth = 10;
 		$scope.inputs.numNewMonsters = 1;
 		$scope.inputs.newMonsterInitMod = 0;
-	}
+	};
+	//Remove monster from the current encounter
+	$scope.removeMonsterFromEncounter = function(monster) {
+		$scope.currentEncounter.monsters.splice($scope.currentEncounter.monsters.findIndex(function(currMonster) {
+			return currMonster.name == monster.name;
+		}), 1);
+	};
 	//Remove monster from monster list
 	$scope.removeMonster = function(monster) {
 		$scope.monsters.splice($scope.monsters.findIndex(function(currMonster) {
 			return currMonster.name == monster.name;
 		}), 1);
-	}
+	};
+	//Create new empty encounter
+	$scope.newEncounter = function() {
+		$scope.currentEncounter = {name: '', monsters: []};
+		$scope.encounters.push($scope.currentEncounter);
+	};
+	//Delete encounter from list
+	$scope.deleteEncounter = function(encounter) {
+		$scope.encounters.splice($scope.encounters.findIndex(function(currEncounter) {
+			return currEncounter.name == encounter.name;
+		}), 1);
+		if ($scope.encounters.length > 0) {
+			$scope.currentEncounter = $scope.encounters[0];
+		} else {
+			$scope.newEncounter();
+		}
+	};
 	//Add a player or monster to initiative order
 	$scope.addCreatureToInitiative = function(creature) {
 		//Insert creature before first creature found with lower initiative
@@ -110,6 +154,13 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			delayed: false};
 		$scope.removeMonster(monster);
 		$scope.addCreatureToInitiative(creature);
+	}
+	//Add all monsters in current encounter to initiative order
+	$scope.addEncounterToInitiative = function() {
+		var monstersCopy = $scope.currentEncounter.monsters.slice();
+		for (var i = 0; i < monstersCopy.length; i++) {
+			$scope.addMonsterToInitiative(monstersCopy[i]);
+		}
 	}
 	//Add all monsters to initiative order
 	$scope.addAllMonstersToInitiative = function() {
@@ -171,7 +222,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				"players": $scope.players,
 				"monsters": $scope.monsters,
 				"order": $scope.initiativeOrder,
-				"active": $scope.active};
+				"active": $scope.active,
+				"encounters": $scope.encounters,
+				"currentEncounter": $scope.currentEncounter};
 			localStorage.setItem("initiativeData", angular.toJson(initiativeData));
 			console.log("Saved to local storage: ", angular.toJson(initiativeData));
 		}
@@ -185,6 +238,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				$scope.monsters = initiativeData.monsters;
 				$scope.initiativeOrder = initiativeData.order;
 				$scope.active = initiativeData.active;
+				$scope.encounters = initiativeData.encounters;
+				$scope.currentEncounter = initiativeData.currentEncounter;
 				console.log("Retrieved from local storage: ", angular.fromJson(localStorage.getItem("initiativeData")));
 			} else { console.log("No initiative data saved in local storage."); }
 		} else { console.log("Couldn't access local storage."); }
@@ -196,4 +251,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.$watch('active', function() { $scope.save(); });
 	
 	$scope.load();
+	
+	if ($scope.currentEncounter === {}) {
+		$scope.currentEncounter = $scope.newEncounter();
+	}
 }]);
