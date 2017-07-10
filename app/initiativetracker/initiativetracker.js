@@ -87,8 +87,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	};
 	//Create new empty encounter
 	$scope.newEncounter = function() {
-		$scope.currentEncounter = {name: '', monsters: []};
-		$scope.encounters.push($scope.currentEncounter);
+		$scope.encounters.push({name: 'New Encounter', monsters: []});
+		$scope.currentEncounter = $scope.encounters[$scope.encounters.length - 1];
 	};
 	//Delete encounter from list
 	$scope.deleteEncounter = function(encounter) {
@@ -253,6 +253,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.load();
 	
 	if ($scope.currentEncounter === {}) {
+		console.log("Initializing empty encounter");
 		$scope.currentEncounter = $scope.newEncounter();
 	}
 }]);
