@@ -66,7 +66,7 @@
 	</div>
 	<div>
 		<h2>Initiative Order</h2>
-		<button ng-click="initiativeOrder=[]" ng-show="initiativeOrder.length > 0">CLEAR</button>
+		<button ng-click="initiativeOrder = []; active = 0" ng-show="initiativeOrder.length > 0">CLEAR</button>
 		<button ng-click="previousTurn()" ng-show="initiativeOrder.length > 0">PREVIOUS</button>
 		<button ng-click="advanceTurn()" ng-show="initiativeOrder.length > 0">ADVANCE</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
