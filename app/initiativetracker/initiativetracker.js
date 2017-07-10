@@ -190,9 +190,9 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		} else { console.log("Couldn't access local storage."); }
 	};
 	
-	$scope.$watch('initiativeOrder', function() { $scope.save(); });
-	$scope.$watch('players', function() { $scope.save(); });
-	$scope.$watch('monsters', function() { $scope.save(); });
+	$scope.$watch('initiativeOrder', function() { $scope.save(); }, true);
+	$scope.$watch('players', function() { $scope.save(); }, true);
+	$scope.$watch('monsters', function() { $scope.save(); }, true);
 	$scope.$watch('active', function() { $scope.save(); });
 	
 	$scope.load();
