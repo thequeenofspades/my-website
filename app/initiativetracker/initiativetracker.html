@@ -31,8 +31,10 @@
 		</div>
 		<div>
 			<h2>Monsters</h2>
-			<select ng-options="encounter.name for encounter in encounters" ng-select="currentEncounter"></select>
+			<select ng-options="encounter.name for encounter in encounters" ng-model="currentEncounter"></select>
+			<br>
 			<button ng-click="newEncounter()">CREATE ENCOUNTER</button>
+			<br>
 			ENCOUNTER <input ng-model="currentEncounter.name" />
 			<form>
 				NAME <input ng-model="inputs.newMonster" />
