@@ -32,11 +32,16 @@
 		<div>
 			<h2>Monsters</h2>
 			<h3>Encounters</h3>
-			<div>
-				<div ng-repeat="encounter in encounters" ng-click="currentEncounter = encounter">
-					{{encounter.name}} ({{encounter.monsters.length}})
-				</div>
-			</div>
+			<table style="background-color: white;">
+				<tr ng-repeat="encounter in encounters" ng-click="currentEncounter = encounter">
+					<td>
+						{{encounter.name}}
+					</td>
+					<td>
+						({{encounter.monsters.length}})
+					</td>
+				</tr>
+			</table>
 			<br>
 			<button ng-click="newEncounter()">NEW</button>
 			<button ng-click="deleteEncounter()">DELETE</button>
