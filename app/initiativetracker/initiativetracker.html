@@ -33,7 +33,7 @@
 			<h2>Monsters</h2>
 			<h3>Encounters</h3>
 			<table class="initTable">
-				<tr ng-repeat="encounter in encounters" ng-click="currentEncounter = encounter">
+				<tr ng-repeat="encounter in encounters" ng-click="scope.currentEncounter = encounter">
 					<td>
 						{{encounter.name}}
 					</td>
