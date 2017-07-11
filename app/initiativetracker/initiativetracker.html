@@ -31,7 +31,12 @@
 		</div>
 		<div>
 			<h2>Monsters</h2>
-			SELECT ENCOUNTER <select ng-options="encounter.name for encounter in encounters" ng-model="currentEncounter"></select>
+			<h3>Encounters</h3>
+			<div>
+				<div ng-repeat="encounter in encounters" ng-click="currentEncounter = encounter">
+					{{encounter.name}} ({{encounter.monsters.length}}
+				</div>
+			</div>
 			<br>
 			<button ng-click="newEncounter()">NEW</button>
 			<button ng-click="deleteEncounter()">DELETE</button>
