@@ -85,6 +85,12 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return currMonster.name == monster.name;
 		}), 1);
 	};
+	//Select clicked encounter
+	$scope.selectEncounter = function(encounter) {
+		$scope.currentEncounter = $scope.encounters[$scope.encounters.findIndex(function(currEncounter) {
+			return currEncounter.name == encounter.name;
+		})];
+	};
 	//Create new empty encounter
 	$scope.newEncounter = function() {
 		$scope.encounters.push({name: 'New Encounter', monsters: []});
