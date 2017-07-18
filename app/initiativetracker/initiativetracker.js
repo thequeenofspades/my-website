@@ -245,7 +245,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				$scope.initiativeOrder = initiativeData.order;
 				$scope.active = initiativeData.active;
 				$scope.encounters = initiativeData.encounters;
-				$scope.currentEncounter = initiativeData.currentEncounter;
+				$scope.currentEncounter = initiativeData.encounters[0];
 				console.log("Retrieved from local storage: ", angular.fromJson(localStorage.getItem("initiativeData")));
 			} else { console.log("No initiative data saved in local storage."); }
 		} else { console.log("Couldn't access local storage."); }
