@@ -260,7 +260,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	
 	$scope.load();
 	
-	if ($scope.currentEncounter === {} || $scope.encounters.length == 0) {
+	if (!$scope.currentEncounter || $scope.currentEncounter === {} || $scope.encounters.length == 0) {
 		console.log("Initializing empty encounter");
 		$scope.currentEncounter = $scope.newEncounter();
 	}
