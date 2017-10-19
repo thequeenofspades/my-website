@@ -17,7 +17,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.advancedSearch = false;
 	$scope.selectedClass = "All Classes";
 	$scope.selectedSchool = "All Schools";
-	$scope.classes = ["All Classes","Adept","Alchemist","Antipaladin","Bard","Bloodrager","Cleric","Druid","Hunter","Inquisitor","Investigator","Magus","Medium","Mesmerist","Occultist","Oracle","Paladin","Psychic","Ranger","Shaman","Skald","Spiritualist","Sorceror","Summoner","Witch","Wizard",]
+	$scope.classes = ["All Classes","Adept","Alchemist","Antipaladin","Bard","Bloodrager","Cleric","Druid","Hunter","Inquisitor","Investigator","Magus","Medium","Mesmerist","Occultist","Oracle","Paladin","Psychic","Ranger","Shaman","Skald","Spiritualist","Sorcerer","Summoner","Witch","Wizard",]
 	$scope.arcaneSchools = ["All Schools", "Abjuration", "Conjuration", "Divination", "Enchantment", "Evocation", "Illusion", "Necromancy", "Transmutation", "Universalist"];
 	$scope.learnSpell = function(spell) {
 		if ($scope.spellbook.indexOf(spell) < 0) {
@@ -63,7 +63,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		// filter by class
 		if ($scope.selectedClass != "All Classes") {
 			$scope.filteredSpells = $scope.filteredSpells.filter(function(spell) {
-				return spell[$scope.selectedClass.toLowerCase()] != "NULL";
+				return spell.spell_level.indexOf($scope.selectedClass.toLowerCase()) != -1;
 			});
 		}
 		// filter by school
@@ -93,6 +93,5 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.spells = JSON.parse(this.responseText);
 		$scope.filterSpells();
 		$scope.$apply();
-		console.log($scope.spells[0]);
 	}
 }]);
