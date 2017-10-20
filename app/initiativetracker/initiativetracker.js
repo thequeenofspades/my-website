@@ -16,6 +16,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.active = 0;
 	$scope.showPlayers = true;
 	$scope.inputs = {numNewMonsters: 1, newMonsterHealth: 0, newMonsterInitMod: 0};
+	$scope.round = 1;
+
 	//Add player to player list
 	$scope.addPlayer = function() {
 		var playerName = $scope.inputs.newPlayerName.toUpperCase().trim();
@@ -33,6 +35,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return currPlayer.name == player.name;
 		}), 1);
 	};
+
 	//Add monster(s) to the current encounter
 	$scope.addMonsterToEncounter = function() {
 		for (var i = 0; i < parseInt($scope.inputs.numNewMonsters); i++) {
@@ -85,6 +88,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			return currMonster.name == monster.name;
 		}), 1);
 	};
+
 	//Select clicked encounter
 	$scope.selectEncounter = function(encounter) {
 		$scope.currentEncounter = $scope.encounters[$scope.encounters.findIndex(function(currEncounter) {
@@ -107,6 +111,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.newEncounter();
 		}
 	};
+
 	//Add a player or monster to initiative order
 	$scope.addCreatureToInitiative = function(creature) {
 		//Insert creature before first creature found with lower initiative
@@ -128,6 +133,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.initiativeOrder.splice(indexToInsert, 0, creature);	//insert before found creature
 		}
 	};
+
 	//Add player to initiative order
 	$scope.addPlayerToInitiative = function(player) {
 		var initiative = Math.floor(Math.random()*(20)) + 1 + parseFloat(player.mod);		// generate random initiative 1-20
@@ -137,15 +143,18 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			initiative: initiative,
 			mod: parseFloat(player.mod),
 			reordered: false,
-			delayed: false};
+			delayed: false,
+			conditions: {}};
 		$scope.addCreatureToInitiative(creature);
 	};
+
 	//Add all players to initiative order
 	$scope.addAllPlayersToInitiative = function() {
 		for (var i = 0; i < $scope.players.length; i++) {
 			$scope.addPlayerToInitiative($scope.players[i]);
 		}
 	};
+
 	//Add monster to initiative order
 	$scope.addMonsterToInitiative = function(monster) {
 		var initiative = parseFloat(monster.initiative) + parseFloat(monster.mod);
@@ -157,10 +166,12 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			health: monster.health,
 			mod: parseFloat(monster.mod),
 			reordered: false,
-			delayed: false};
+			delayed: false,
+			conditions: {}};
 		$scope.removeMonster(monster);
 		$scope.addCreatureToInitiative(creature);
 	}
+
 	//Add all monsters in current encounter to initiative order
 	$scope.addEncounterToInitiative = function() {
 		var monstersCopy = $scope.currentEncounter.monsters.slice();
@@ -168,6 +179,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.addMonsterToInitiative(monstersCopy[i]);
 		}
 	}
+
 	//Add all monsters to initiative order
 	$scope.addAllMonstersToInitiative = function() {
 		var monstersCopy = $scope.monsters.slice();
@@ -175,10 +187,12 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			$scope.addMonsterToInitiative(monstersCopy[i]);
 		}
 	}
+
 	//Remove creature from initiative order
 	$scope.removeFromInititiative = function(creature) {
 		$scope.initiativeOrder.splice($scope.initiativeOrder.indexOf(creature), 1);
 	};
+
 	//Move creature up or down in initiative order
 	$scope.reorderInitiative = function(creature, offset) {
 		creature.reordered = true;
@@ -187,19 +201,21 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		var insertIndex = (((index + offset) % m) + m) % m;
 		$scope.initiativeOrder.splice(index, 1);			// remove from initiative order
 		$scope.initiativeOrder.splice(insertIndex, 0, creature);	// reinsert
-		/*if (index + offset > $scope.initiativeOrder.length) {		// creature already at bottom, moved down
-			$scope.initiativeOrder.splice(0, 0, creature);		// insert at top
-		} else if (index + offset < 0) {
-			$scope.initiativeOrder.push(creature);			// insert at bottom
-		} else {
-			$scope.initiativeOrder.splice(index + offset, 0, creature);	// reinsert
-		}*/
 	};
+
 	//Subtract damage from a creature's health
 	$scope.damageMonster = function(monster) {
 		monster.health = monster.health - monster.damage;
 		monster.damage = 0;
 	};
+
+	//Apply a condition to a creature
+	$scope.applyCondition = function(creature) {
+		creature.conditions[creature.condition] = parseInt(creature.duration);
+		creature.condition = '';
+		creature.duration = 0;
+	}
+
 	//Turn creature a different color to indicate that it is delayed or has a readied action waiting
 	$scope.delayCreature = function(creature) {
 		creature.delayed = true;
@@ -211,16 +227,47 @@ myApp.config(['$routeProvider', function($routeProvider) {
 		$scope.reorderInitiative(creature, offset);
 		creature.delayed = false;
 	}
-	//Advance turn forward
+
+	//Advance turn forward, skipping dead monsters
 	$scope.advanceTurn = function() {
+		if ($scope.active + 1 == $scope.initiativeOrder.length) {
+			$scope.round += 1;
+		}
 		$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
-		$scope.initiativeOrder[$scope.active].delayed = false;
+		var creature = $scope.initiativeOrder[$scope.active];
+		creature.delayed = false;
+		for (var condition in creature.conditions) {
+			creature.conditions[condition] -= 1;
+		}
+		while (creature.health < 0) {
+			$scope.active = ($scope.active + 1) % $scope.initiativeOrder.length;
+			creature = $scope.initiativeOrder[$scope.active];
+			creature.delayed = false;
+			for (var condition in creature.conditions) {
+				creature.conditions[condition] -= 1;
+			}
+		}
 	};
-	//Decrease turn tracker by one
+	//Decrease turn tracker by one, skipping dead monsters
 	$scope.previousTurn = function() {
+		if ($scope.active == 0) {
+			$scope.round -= 1;
+		}
 		var m = $scope.initiativeOrder.length;
 		$scope.active = ((($scope.active - 1) % m) + m) % m;
+		var creature = $scope.initiativeOrder[$scope.active];
+		for (var condition in creature.conditions) {
+			creature.conditions[condition] += 1;
+		}
+		while (creature.health < 0) {
+			$scope.active = ((($scope.active - 1) % m) + m) % m;
+			creature = $scope.initiativeOrder[$scope.active];
+			for (var condition in creature.conditions) {
+				creature.conditions[condition] += 1;
+			}
+		}
 	};
+
 	//Save to local storage
 	$scope.save = function() {
 		if (typeof(Storage) !== "undefined") {
@@ -230,7 +277,8 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				"order": $scope.initiativeOrder,
 				"active": $scope.active,
 				"encounters": $scope.encounters,
-				"currentEncounter": $scope.currentEncounter};
+				"currentEncounter": $scope.currentEncounter,
+				"round": $scope.round};
 			localStorage.setItem("initiativeData", angular.toJson(initiativeData));
 			console.log("Saved to local storage: ", angular.toJson(initiativeData));
 		}
@@ -246,6 +294,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 				$scope.active = initiativeData.active;
 				$scope.encounters = initiativeData.encounters;
 				$scope.currentEncounter = initiativeData.encounters[0];
+				$scope.round = initiativeData.round;
 				console.log("Retrieved from local storage: ", angular.fromJson(localStorage.getItem("initiativeData")));
 			} else { console.log("No initiative data saved in local storage."); }
 		} else { console.log("Couldn't access local storage."); }
@@ -257,6 +306,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
 	$scope.$watch('active', function() { $scope.save(); });
 	$scope.$watch('encounters', function() { $scope.save(); }, true);
 	$scope.$watch('currentEncounter', function() { $scope.save(); }, true);
+	$scope.$watch('round', function() { $scope.save(); }, true);
 	
 	$scope.load();
 	

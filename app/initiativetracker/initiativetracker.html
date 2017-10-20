@@ -31,25 +31,6 @@
 		</div>
 		<div>
 			<h2>Monsters</h2>
-			<!--<h3>Encounters</h3>
-			<table class="initTable">
-				<tr ng-repeat="encounter in encounters" ng-click="selectEncounter(encounter)">
-					<td>
-						{{encounter.name}}
-					</td>
-					<td>
-						({{encounter.monsters.length}})
-					</td>
-				</tr>
-			</table>
-			<br>
-			<button ng-click="newEncounter()">NEW</button>
-			<button ng-click="deleteEncounter()">DELETE</button>
-			<br>
-			ENCOUNTER <input ng-model="currentEncounter.name" />
-			<br>
-			ADD MONSTERS
-			<br>-->
 			<form>
 				NAME <input ng-model="inputs.newMonster" />
 				<br>
@@ -88,6 +69,8 @@
 		<button ng-click="initiativeOrder = []; active = 0" ng-show="initiativeOrder.length > 0">CLEAR</button>
 		<button ng-click="previousTurn()" ng-show="initiativeOrder.length > 0">PREVIOUS</button>
 		<button ng-click="advanceTurn()" ng-show="initiativeOrder.length > 0">ADVANCE</button>
+		Round: {{round}}
+		<button ng-click="round = 1" ng-show="initiativeOrder.length > 0">RESET</button>
 		<table class="initTable" ng-show="initiativeOrder.length > 0">
 			<tr ng-repeat="creature in initiativeOrder" ng-class="{delayed: creature.delayed, inactive: creature.health <= 0, active: creature == initiativeOrder[active]}" draggable=true>
 				<td>
@@ -117,6 +100,17 @@
 					<input ng-model="creature.damage" size=2 />
 					<a><img ng-src="images/gun_icon_black.png" class="inline-square" ng-click="damageMonster(creature)" title="Damage"/></a>
 				</span></td>
+				<td>
+					<input ng-model="creature.condition" size=10 />
+					<input ng-model="creature.duration" size=2 />
+					<button ng-click="applyCondition(creature)">APPLY</button>
+					<br>
+					<span ng-repeat="(condition, duration) in creature.conditions">
+						<span ng-if="duration >= 0" title="{{condition}}: {{duration}}">
+						{{condition[0]}}: {{duration}}
+						</span>
+					</span>
+				</td>
 				<td>
 					<img ng-src="images/notebook_icon.png" class="inline-square" title="Notes"/>
 					<input size=10 />
